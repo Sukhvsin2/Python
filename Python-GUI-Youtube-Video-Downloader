@@ -1,0 +1,61 @@
+from tkinter import *
+from pytube import YouTube
+from tkinter import filedialog
+from tkinter import messagebox
+
+
+
+def downloadvid():
+    global vid
+    n = int(spin.get())
+    vid = videos[n-1]
+    destination = 'C:/Users/sukhi/Desktop'#filedialog.asksaveasfile(mode='w',defaultextension='.mp4')
+    vid.download(destination)
+
+    messagebox._show('DOWNLOAD','File has been Downloaded')
+
+def avil():
+    dw_button.configure(bg = "red",fg='white')
+
+def click():
+    global link
+    global videos
+    global box
+    global yt
+    link = entry.get()
+    yt = YouTube(link)
+    videos = yt.streams.all()
+    n = 0
+    for i in videos:
+        n+=1
+        box.insert(n,i)
+    avil()
+
+   
+root = Tk()
+root.title('Youtuber Downloader')
+
+head = Label(root,text='Youtube Video Downloader')
+head.config(font=10)
+head.pack()
+
+label = Label(root,text='Enter the Link of Video ').place(x=30,y=50)
+entry = Entry(root)
+entry.place(x=160,y=50)
+
+click = Button(root,text = 'Click Me',command = click).place(x=300,y=45)
+
+spin = Spinbox(root,from_=0,to=10,value=1)
+spin.place(x=600,y=50)
+
+dw_button = Button(root,text ='Download',command=downloadvid)
+dw_button.place(x=600,y=80)
+
+box = Listbox(root,height=25,width=120)
+
+box.place(x=20,y=120)
+
+
+    
+root.geometry('800x600+100+100')
+root.mainloop()
